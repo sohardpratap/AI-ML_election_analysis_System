@@ -1,0 +1,86 @@
+Documentation: Steps to Run the Election Analysis System on a New Machine
+Follow these steps to set up and run the Election Analysis System on a new machine:
+
+1. System Requirements
+Operating System: Windows/Linux/MacOS
+Python Version: 3.12 (recommended)
+2. Clone the Project
+Clone the project repository to your local machine:
+bash
+Copy code
+git clone <repository_url>
+cd <repository_folder>
+3. Set Up a Virtual Environment
+Create and activate a virtual environment:
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate  # On Linux/MacOS
+venv\Scripts\activate     # On Windows
+4. Install Dependencies
+Install all required Python libraries:
+bash
+Copy code
+pip install -r requirements.txt
+5. Prepare the Datasets
+Place the raw datasets in the datasets/raw/ folder.
+Run preprocessing scripts (if not preprocessed yet):
+bash
+Copy code
+python datasets/preprocess_data.py
+python datasets/preprocess_twitter_data.py
+python datasets/preprocess_winner_data.py
+6. Set Up the Database
+Apply migrations to create the database:
+
+bash
+Copy code
+python manage.py makemigrations
+python manage.py migrate
+If needed, load data into the database:
+
+bash
+Copy code
+python manage.py loaddata <your_data.json>
+7. Run the Server
+Start the development server:
+
+bash
+Copy code
+python manage.py runserver
+Access the application in your browser at:
+
+arduino
+Copy code
+http://127.0.0.1:8000/
+8. Key Functionalities
+Landing Page:
+
+Navigate to the main dashboard for options like:
+Sentiment Analysis
+Winning Prediction
+Visualizations
+Sentiment Analysis:
+
+Access at /sentiment_analysis/. Enter a tweet to analyze its sentiment.
+Winning Prediction:
+
+Access at /winning_prediction/. View predictions for election outcomes.
+Visualizations:
+
+Access at /all_visualizations/. Explore various trends and graphs.
+9. Common Issues and Fixes
+Slow Sentiment Analysis Model Initialization:
+
+Ensure the Hugging Face pre-trained model is cached locally to speed up performance.
+Database Errors:
+
+Verify migrations and datasets are properly loaded.
+Delete and recreate the database if required:
+bash
+Copy code
+rm db.sqlite3
+python manage.py migrate
+Dependency Errors:
+
+Ensure the correct Python version and virtual environment are used.

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .chart-container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .chart-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">All Visualizations</h1>
+
+        <!-- State-wise Winning Percentages -->
+        <div class="chart-container">
+            <div class="chart-title">State-wise Winning Percentages</div>
+            <canvas id="stateWinningChart"></canvas>
+        </div>
+
+        <!-- Modi Sentiment Distribution -->
+        <div class="chart-container">
+            <div class="chart-title">Modi Sentiment Distribution</div>
+            <canvas id="modiSentimentChart"></canvas>
+        </div>
+
+        <!-- Modi Sentiment Trends -->
+        <div class="chart-container">
+            <div class="chart-title">Modi Sentiment Trends Over Time</div>
+            <canvas id="modiTrendsChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Safely rendered data from Django
+        const stateWinningData = JSON.parse('{{ state_data|safe }}');
+        const modiSentimentData = JSON.parse('{{ modi_sentiment|safe }}');
+        const modiTrendsData = JSON.parse('{{ modi_trends|safe }}');
+
+        // State-wise Winning Percentages Chart
+        new Chart(document.getElementById('stateWinningChart'), {
+            type: 'bar',
+            data: {
+                labels: stateWinningData.states,
+                datasets: [{
+                    label: 'Winning Percentage',
+                    data: stateWinningData.percentages,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                },
+            },
+        });
+
+        // Modi Sentiment Distribution Chart
+        new Chart(document.getElementById('modiSentimentChart'), {
+            type: 'pie',
+            data: {
+                labels: modiSentimentData.labels,
+                datasets: [{
+                    data: modiSentimentData.values,
+                    backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                },
+            },
+        });
+
+        // Modi Sentiment Trends Chart
+        new Chart(document.getElementById('modiTrendsChart'), {
+            type: 'line',
+            data: {
+                labels: modiTrendsData.dates,
+                datasets: [{
+                    label: 'Sentiment Score',
+                    data: modiTrendsData.scores,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                },
+            },
+        });
+    </script>
+</body>
+</html>

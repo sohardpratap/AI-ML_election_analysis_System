@@ -1,0 +1,33 @@
+<!-- templates/winning_prediction.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winning Party Prediction</title>
+</head>
+<body>
+    <h1>Winning Party Prediction</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <label for="state">State:</label>
+        <input type="text" name="state" required><br>
+
+        <label for="year">Year:</label>
+        <input type="number" name="year" required><br>
+
+        <label for="votes">Votes:</label>
+        <input type="number" name="votes" required><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if winning_party %}
+    <h2>Predicted Winning Party: {{ winning_party }}</h2>
+{% else %}
+    <p>No prediction available. Submit the form.</p>
+{% endif %}
+
+</body>
+</html>
