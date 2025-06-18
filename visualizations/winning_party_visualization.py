@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 
 # Path to cleaned dataset
-DATASET_PATH = "datasets\cleaned\cleaned_big_election_dataset.csv"
+DATASET_PATH = os.path.join("datasets", "cleaned", "cleaned_big_election_dataset.csv")
 
 # DATASET_PATH = os.path.join(os.path.dirname(__file__), '../../datasets/cleaned/cleaned_big_election_dataset.csv')
 
